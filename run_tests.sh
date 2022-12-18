@@ -22,11 +22,13 @@ function abspath {
         require "a valid relative path"
     }
 
-    echo -n "$(realpath "${SCRIPT_DIR}/$relpath")"
+    # intermediate var because "echo" command doesn't fail when subshell fails
+    ret="$(realpath "${SCRIPT_DIR}/$relpath")"
+    echo -n "$ret"
 }
 
 declare -A path=(
-    [BINARY_FILE]="./bin/test"
+    [BINARY_FILE]="../bin/test"
     [SRC_FILE]="./src/test.cpp"
     [INCLUDE_DIR]="./include"
     [LIBS]="./lib/catch.o"
@@ -69,6 +71,8 @@ function run_binary {
 
     exec "$BINARY_FILE"
 }
+
+echo bonjour
 
 assert_src_exists
 
