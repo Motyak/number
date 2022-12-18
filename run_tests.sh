@@ -20,9 +20,7 @@ function abspath {
     local relpath="$1"
     require [ "${relpath:0:2}" == "./" ]
 
-    # using global variable instead of echo because exit in subshells aren't properly handled atm
-    # echo -n "${SCRIPT_DIR}/${relpath:2}"
-    ret="${SCRIPT_DIR}/${relpath:2}"
+    echo -n "${SCRIPT_DIR}/${relpath:2}"
 }
 
 declare -A path=(
@@ -31,9 +29,11 @@ declare -A path=(
     [INCLUDE_DIR]="./include"
     [LIBS]="./lib/catch.o"
 )
-# when we exit from subshell (due to requirement not met), the script continues its execution
-# for key in "${!path[@]}"; do declare -r "$key"="$(abspath "${path[$key]}")"; done
-for key in "${!path[@]}"; do abspath "${path[$key]}"; declare -r "$key"="$ret"; done
+for key in "${!path[@]}"; do
+    # intermediate var because "declare" command doesn't fail when subshell fails
+    ret="$(abspath "${path[$key]}")"
+    declare -r "$key"="$ret"
+done
 unset path
 
 function assert_src_exists {
@@ -48,7 +48,8 @@ function assert_src_exists {
 function binary_exists_and_is_up_to_date {
     require [ -f "$SRC_FILE" ]
 
-    [ -f "$BINARY_FILE" ] && [ "$BINARY_FILE" -nt "$SRC_FILE" ]
+    [ -f "$BINARY_FILE" ]
+    [ "$BINARY_FILE" -nt "$SRC_FILE" ]
 }
 
 function build_binary {
@@ -69,4 +70,6 @@ function run_binary {
 
 assert_src_exists
 
-{ binary_exists_and_is_up_to_date || build_binary; } && run_binary
+binary_exists_and_is_up_to_date || build_binary
+
+run_binary
