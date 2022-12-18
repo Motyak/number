@@ -6,12 +6,14 @@ set -o nounset
 set -o pipefail
 
 trap handle_errexit ERR
-trap clean_and_exit SIGINT SIGTERM EXIT
+trap handle_sigint SIGINT
+trap handle_sigterm SIGTERM
+trap clean_and_exit EXIT
 
 SCRIPT_DIR=$(cd "$(dirname "${BASH_SOURCE[0]}")" &>/dev/null && pwd -P)
 
 function require {
-    declare -r E_REQUIREMENT_NOT_MET=10
+    declare -r E_REQUIREMENT_NOT_MET=98
 
     read -a caller_output <<< "$(caller 0)"
     local lineno=${caller_output[0]}
@@ -23,7 +25,7 @@ function require {
     $condition || {
         >&2 echo "Assertion \`$condition\` failed in $func_name"
         >&2 echo "  -> $filename:$lineno"
-        clean_and_exit $E_REQUIREMENT_NOT_MET
+        exit $E_REQUIREMENT_NOT_MET
     }
 }
 
@@ -44,11 +46,11 @@ for key in "${!path[@]}"; do declare -r "$key"="$(abspath "${path[$key]}")"; don
 unset path
 
 function assert_src_exists {
-    declare -r E_NO_SRC_FILE=20
+    declare -r E_NO_SRC_FILE=10
 
     [ -f "$SRC_FILE" ] || {
         >&2 echo "$SRC_FILE cannot be found"
-        clean_and_exit $E_NO_SRC_FILE
+        exit $E_NO_SRC_FILE
     }
 }
 
@@ -68,36 +70,58 @@ function build_binary {
 
 function run_binary {
     require [ -f "$BINARY_FILE" ]
-    mkdir bin # for testing purpose
+    # mkdir bin # for testing purpose
+    # echo $$; read # for testing purpose
 
     exec "$BINARY_FILE"
 }
 
 function handle_errexit {
-    declare -r E_COMMAND_FAILING=11
-
     local status=$?
+
+    trap - ERR
+
+    declare -r E_COMMAND_FAILING=99
+
     local cmd=$BASH_COMMAND
     local func_name=${FUNCNAME[1]:-main context}
     local filename=${BASH_SOURCE[1]}
     local lineno=${BASH_LINENO[0]}
 
-    trap - ERR
-
     >&2 echo "Command \`$cmd\` failed in $func_name with status $status"
     >&2 echo "  -> $filename:$lineno"
 
-    clean_and_exit $E_COMMAND_FAILING
+    exit $E_COMMAND_FAILING
 }
 
+function handle_sigint  {
+    declare -r E_SIGINT_SENT=130 # 128 + 2 (SIGINT)
+
+    trap - SIGINT
+
+    >&2 echo # newline after ^C
+    >&2 echo "SIGINT was sent"
+
+    exit $E_SIGINT_SENT
+}
+
+function handle_sigterm {
+    declare -r E_SIGTERM_SENT=143 # 128 + 15 (SIGTERM)
+
+    trap - SIGTERM
+
+    >&2 echo "SIGTERM was sent"
+
+    exit $E_SIGTERM_SENT
+}
 
 function clean_and_exit {
-    local exit_code=${1:-0}
+    local exit_code=${?:-0}
 
-    trap - SIGINT SIGTERM EXIT
+    >&2 echo "Cleaning..."
+    # clean tmp resources
 
-    # clean tmp resources, ..
-
+    >&2 echo "Exiting with status $exit_code"
     exit $exit_code
 }
 
