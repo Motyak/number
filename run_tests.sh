@@ -18,13 +18,15 @@ source "$SCRIPT_DIR/include/utils.sh"
 
 function abspath {
     local relpath="$1"
-    require [ "${relpath:0:2}" == "./" ]
+    { [ "${relpath:0:2}" == "./" ] || [ "${relpath:0:3}" == "../" ]; } || {
+        require "a valid relative path"
+    }
 
-    echo -n "${SCRIPT_DIR}/${relpath:2}"
+    echo -n "$(realpath "${SCRIPT_DIR}/$relpath")"
 }
 
 declare -A path=(
-    [BINARY_FILE]="../bin/test"
+    [BINARY_FILE]="./bin/test"
     [SRC_FILE]="./src/test.cpp"
     [INCLUDE_DIR]="./include"
     [LIBS]="./lib/catch.o"

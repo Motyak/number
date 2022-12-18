@@ -15,8 +15,15 @@ function require {
     local func_name=${caller_output[1]}
     local filename=${caller_output[2]}
 
-    local condition=$*
+    # if unmet requirement passed rather than a condition to check
+    [ $# -eq 1 ] && {
+        local requirement=$1
+        >&2 echo "Assertion \`$requirement\` failed in $func_name"
+        >&2 echo "  -> $filename:$lineno"
+        exit $E_REQUIREMENT_NOT_MET
+    }
 
+    local condition=$*
     $condition || {
         >&2 echo "Assertion \`$condition\` failed in $func_name"
         >&2 echo "  -> $filename:$lineno"
