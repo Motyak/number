@@ -1,6 +1,15 @@
 #!/usr/bin/env bash
 
 trap clean_and_exit EXIT
+function clean_and_exit {
+    local exit_code=${?:-0}
+
+    >&2 echo "Cleaning..."
+    # clean tmp resources
+
+    >&2 echo "Exiting with status $exit_code"
+    exit $exit_code
+}
 
 SCRIPT_DIR=$(cd "$(dirname "${BASH_SOURCE[0]}")" &>/dev/null && pwd -P)
 
@@ -11,16 +20,20 @@ function abspath {
     local relpath="$1"
     require [ "${relpath:0:2}" == "./" ]
 
-    echo -n "${SCRIPT_DIR}/${relpath:2}"
+    # using global variable instead of echo because exit in subshells aren't properly handled atm
+    # echo -n "${SCRIPT_DIR}/${relpath:2}"
+    ret="${SCRIPT_DIR}/${relpath:2}"
 }
 
 declare -A path=(
-    [BINARY_FILE]="./bin/test"
+    [BINARY_FILE]="../bin/test"
     [SRC_FILE]="./src/test.cpp"
     [INCLUDE_DIR]="./include"
     [LIBS]="./lib/catch.o"
 )
-for key in "${!path[@]}"; do declare -r "$key"="$(abspath "${path[$key]}")"; done
+# when we exit from subshell (due to requirement not met), the script continues its execution
+# for key in "${!path[@]}"; do declare -r "$key"="$(abspath "${path[$key]}")"; done
+for key in "${!path[@]}"; do abspath "${path[$key]}"; declare -r "$key"="$ret"; done
 unset path
 
 function assert_src_exists {
@@ -52,16 +65,6 @@ function run_binary {
     # echo $$; read # for testing purpose
 
     exec "$BINARY_FILE"
-}
-
-function clean_and_exit {
-    local exit_code=${?:-0}
-
-    >&2 echo "Cleaning..."
-    # clean tmp resources
-
-    >&2 echo "Exiting with status $exit_code"
-    exit $exit_code
 }
 
 assert_src_exists
