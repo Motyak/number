@@ -1,13 +1,5 @@
 #!/usr/bin/env bash
 
-set -o errexit
-set -o errtrace
-set -o nounset
-set -o pipefail
-
-trap handle_errexit ERR
-trap handle_sigint SIGINT
-trap handle_sigterm SIGTERM
 trap clean_and_exit EXIT
 
 SCRIPT_DIR=$(cd "$(dirname "${BASH_SOURCE[0]}")" &>/dev/null && pwd -P)

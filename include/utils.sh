@@ -1,3 +1,12 @@
+set -o errexit
+set -o errtrace
+set -o nounset
+set -o pipefail
+
+trap handle_errexit ERR
+trap handle_sigint SIGINT
+trap handle_sigterm SIGTERM
+
 function require {
     declare -r E_REQUIREMENT_NOT_MET=98
 
