@@ -1,4 +1,7 @@
-./include/catch.hpp
-./lib/catch.o
+.vscode
 
-./bin/
+include/catch.hpp
+
+lib
+
+bin

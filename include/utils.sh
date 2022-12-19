@@ -39,7 +39,7 @@ function handle_errexit {
     declare -r E_COMMAND_FAILING=99
 
     local cmd=$BASH_COMMAND
-    local func_name=${FUNCNAME[1]:-main context}
+    local func_name=${FUNCNAME[1]}
     local filename=${BASH_SOURCE[1]}
     local lineno=${BASH_LINENO[0]}
 

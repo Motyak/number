@@ -2,7 +2,7 @@
 
 trap clean_and_exit EXIT
 function clean_and_exit {
-    local exit_code=${?:-0}
+    local exit_code=$?
 
     >&2 echo "Cleaning..."
     # clean tmp resources
@@ -60,7 +60,7 @@ function build_binary {
     require [ -f "$SRC_FILE" ]
     require [ -d "$INCLUDE_DIR/" ]
     for lib in $LIBS; do require [ -f "$lib" ]; done
-    
+
     g++ "$LIBS" "$SRC_FILE" -I "$INCLUDE_DIR/" -o "$BINARY_FILE"
 }
 
@@ -71,8 +71,6 @@ function run_binary {
 
     exec "$BINARY_FILE"
 }
-
-echo bonjour
 
 assert_src_exists
 
