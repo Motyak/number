@@ -13,7 +13,11 @@ int main()
 
         nb <<= 2;
         sum(nb[_3]) & sum(nb[_2]) & period(9);
+
+        sum(nb <<= 2, nb <<=2, nb <<= 2) & period(9);
     }
+
+    
 
     // x +/ 3 == y;
     (x + x/3) == y;
