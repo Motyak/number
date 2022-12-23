@@ -1,3 +1,4 @@
+#include <number.h>
 
 int main()
 {
@@ -25,4 +26,6 @@ int main()
     (y + 51percent2) == z; // true
 
     (     x * 2    ) == z; // true
+
+    abs( x - y ) == abs( y - z ); // true
 }
