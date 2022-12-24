@@ -49,3 +49,25 @@ TEST_CASE("Create a number -fails-")
 {
     REQUIRE_THROWS(Number("fds"));
 }
+
+TEST_CASE("Create a quantifier -succeeds-")
+{
+    { auto nb = Quantifier{3}; }
+    { auto nb = 3_; }
+}
+
+TEST_CASE("Create a quantifier -fails- (negative number)")
+{
+    REQUIRE_THROWS(Quantifier{-1});
+}
+
+TEST_CASE("Create a quantifier -fails- (number exceeding max value)")
+{
+    REQUIRE_THROWS(2147483648_);
+}
+
+TEST_CASE("Quantifier multiply operator, Number equal operator")
+{
+    bool equality = ( (6_ * '9') == "999 999"nb );
+    REQUIRE (equality);
+}

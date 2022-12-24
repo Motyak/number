@@ -17,7 +17,8 @@ class String
     String();
     String(const char* str);
     String(std::string str);
-    
+
+    operator std::string() const;
     bool operator=(RegexToCheck regex);
 };
 
@@ -29,10 +30,13 @@ class Regex
   public:
     Regex(std::string str);
     
-    
     RegexToCheck operator~();
+
+    operator std::string() const;
 };
 
 Regex  operator "" _regex(const char* str, size_t _);
+
+String erase(Regex, String);
 
 #endif // UTILS_STRING_H

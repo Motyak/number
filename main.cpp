@@ -8,13 +8,13 @@ int main()
 
     for ( Number nb: {x, y, z} )
     {
-        sum( nb[_3] ) & sum( nb[_2] ) & period( '9' ); // true
+        sum( nb[3_] ) & sum( nb[2_] ) & period( '9' ); // true
 
         nb <<= 2;
-        sum( nb[_3] ) & sum( nb[_2] ) & period( '9' ); // true
+        sum( nb[3_] ) & sum( nb[2_] ) & period( '9' ); // true
 
         nb <<= 2;
-        sum( nb[_3] ) & sum( nb[_2] ) & period( '9' ); // true
+        sum( nb[3_] ) & sum( nb[2_] ) & period( '9' ); // true
 
         sum( nb<<=2, nb<<=2, nb<<=2 ) & period( '9' ); // true
     }
