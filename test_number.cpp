@@ -2,6 +2,32 @@
 
 #include <catch_amalgamated.hpp>
 
+TEST_CASE("Create a digit -succeeds-")
+{
+    { Digit digit = 9; }
+
+    { Digit digit = '9'; }
+
+    { auto digit = Digit(9); }
+
+    { auto digit = Digit{9}; }
+}
+
+TEST_CASE("Create a digit -fails- (negative number)")
+{
+    REQUIRE_THROWS(Digit(-1));
+}
+
+TEST_CASE("Create a digit -fails- (number exceeding 1 digit)")
+{
+    REQUIRE_THROWS(Digit(11));
+}
+
+TEST_CASE("Create a digit -fails- (char which isn't a number")
+{
+    REQUIRE_THROWS(Digit('x'));
+}
+
 TEST_CASE("Create a number -succeeds-")
 {
 
