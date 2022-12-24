@@ -1,6 +1,6 @@
 #include <number.h>
 
-#include <lib/catch_amalgamated.hpp>
+#include <catch_amalgamated.hpp>
 
 TEST_CASE("Create a number -succeeds-")
 {

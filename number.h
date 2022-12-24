@@ -1,17 +1,21 @@
+#ifndef NUMBER_H
+#define NUMBER_H
 
-#include <string>
+#include <utils/string.h> // String
+
+#include <string> // std::string
 
 class Number
 {
-  public:
-    static bool isAValidNumber(std::string);
-
   private:
-    std::string digits;
+    String digits;
 
   public:
+    Number(String digits);
     Number(std::string digits);
     Number(const char* digits);
 };
 
 Number operator "" nb(const char*, size_t);
+
+#endif // NUMBER_H

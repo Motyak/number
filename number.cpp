@@ -1,23 +1,20 @@
 #include <number.h>
 
-#include <keywords.h>
+#include <utils/require.h>
 
-#include <regex>
-
-bool Number::isAValidNumber(std::string digits)
+Number::Number(String digits)
 {
-    std::smatch dummy;
-    return std::regex_match(digits, dummy, std::regex(R"(^\s*\d+(?:\s*\d+)*\s*$)"));
-}
-
-Number::Number(std::string digits)
-{
-    require (Number::isAValidNumber(digits));
+    require (digits =~ R"(^\s*\d+(?:\s*\d+)*\s*$)"_regex);
 
     this->digits = digits;
 }
 
-Number::Number(const char* digits) : Number(std::string(digits))
+Number::Number(std::string digits) : Number(String(digits))
+{
+    ;
+}
+
+Number::Number(const char* digits) : Number(String(digits))
 {
     ;
 }
@@ -26,4 +23,3 @@ Number operator "" nb(const char* str, size_t _)
 {
     return Number(str);
 }
-

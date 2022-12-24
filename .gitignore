@@ -1,7 +1,3 @@
 .vscode
-
-include/catch.hpp
-
-lib
-
 bin
+obj
