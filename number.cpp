@@ -3,7 +3,11 @@
 #include <utils/require.h>
 
 #include <bits/stdc++.h> // INT_MAX
-#include <sstream> // std::stringstream
+
+Digit::operator char() const
+{
+    return char(this->val + '0');
+}
 
 Digit::Digit(int i)
 {
@@ -45,6 +49,14 @@ Number::Number(String p_digits)
     this->digits = std::vector<Digit>(digits.begin(), digits.end());
 }
 
+Number::operator String() const
+{
+    std::vector<char> chars;
+    auto to_char = [](Digit d){return char(d);};
+    std::transform(this->digits.begin(), this->digits.end(), std::back_inserter(chars), to_char);
+    return std::string(chars.begin(), chars.end());
+}
+
 Number::Number(std::string digits) : Number(String(digits))
 {
     ;
@@ -60,9 +72,29 @@ Number operator "" nb(const char* str, size_t _)
     return Number(str);
 }
 
-bool Number::operator==(Number other)
+bool Number::equals(Number other)
 {
     return this->digits == other.digits;
+}
+
+std::vector<Number> Number::operator[](Quantifier qu)
+{
+    bool equally_dividable = ((this->digits.size() % int(qu)) == 0);
+    require (equally_dividable);
+
+    Quantifier chunk_size = this->digits.size() / int(qu);
+    Regex regex = (chunk_size * '.');
+    std::vector<std::string> matches = (String(*this) =~ regex);
+
+    std::vector<Number> numbers;
+    auto to_number = [](std::string str){return Number(str);};
+    std::transform(matches.begin(), matches.end(), std::back_inserter(numbers), to_number);
+    return numbers;
+}
+
+bool operator==(Number a, Number b)
+{
+    return a.equals(b);
 }
 
 Quantifier::Quantifier(int val)
@@ -84,7 +116,7 @@ Quantifier operator "" _(integral i)
     return Quantifier{int(i)};
 }
 
-Number operator*(Quantifier quantifier, Digit digit)
+std::string operator*(Quantifier qu, char ch)
 {
-    return Number(std::vector<Digit>(int(quantifier), digit));
+    return std::string(int(qu), ch);
 }

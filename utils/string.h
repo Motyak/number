@@ -2,10 +2,23 @@
 #define UTILS_STRING_H
 
 #include <string> // std::string
+#include <vector> // std::vector
 
 struct RegexToCheck
 {
     std::string str;
+};
+
+class Matches
+{
+  private:
+    std::vector<std::string> val;
+
+  public:
+    Matches(std::vector<std::string> val);
+
+    operator bool() const;
+    operator std::vector<std::string>() const;
 };
 
 class String
@@ -19,7 +32,7 @@ class String
     String(std::string str);
 
     operator std::string() const;
-    bool operator=(RegexToCheck regex);
+    Matches operator=(RegexToCheck regex);
 };
 
 class Regex

@@ -94,6 +94,14 @@ TEST_CASE("Create a quantifier -fails- (number exceeding max value)")
 
 TEST_CASE("Quantifier multiply operator, Number equal operator")
 {
-    bool equality = ( (6_ * '9') == "999 999"nb );
+    bool equality = ( Number(6_ * '9') == "999 999"nb );
     REQUIRE (equality);
+}
+
+TEST_CASE("Number subscript operator with Quantifier")
+{
+    std::vector<Number> a = "123 456"nb[3_];
+    std::vector<Number> b = {"12"nb, "34"nb, "56"nb};
+
+    REQUIRE (a == b);
 }
