@@ -41,7 +41,7 @@ Number::Number(String p_digits)
 {
     require (p_digits =~ R"(^\s*\d+(?:\s*\d+)*\s*$)"_regex);
 
-    std::string digits = erase(R"(\s+)"_regex, p_digits);
+    std::string digits = (p_digits - R"(\s+)"_regex);
     this->digits = std::vector<Digit>(digits.begin(), digits.end());
 }
 
@@ -72,7 +72,7 @@ Quantifier::Quantifier(int val)
     this->val = val;
 }
 
-int Quantifier::to_int()
+Quantifier::operator int() const
 {
     return this->val;
 }
@@ -86,5 +86,5 @@ Quantifier operator "" _(integral i)
 
 Number operator*(Quantifier quantifier, Digit digit)
 {
-    return Number(std::vector<Digit>(quantifier.to_int(), digit));
+    return Number(std::vector<Digit>(int(quantifier), digit));
 }

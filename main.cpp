@@ -6,6 +6,7 @@ int main()
     Number y = "263 736";
     Number z = "395 604";
 
+
     for ( Number nb: {x, y, z} )
     {
         sum( nb[3_] ) & sum( nb[2_] ) & period( '9' ); // true
@@ -19,6 +20,7 @@ int main()
         sum( nb<<=2, nb<<=2, nb<<=2 ) & period( '9' ); // true
     }
 
+
     (x +    x/3    ) == y; // true
     (x + 34percent2) == y; // true
 
@@ -27,5 +29,6 @@ int main()
 
     (     x * 2    ) == z; // true
 
-    abs( x - y ) == abs( y - z ); // true
+
+    abs(x - y) == abs(y - z); // true
 }

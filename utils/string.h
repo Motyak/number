@@ -37,6 +37,6 @@ class Regex
 
 Regex  operator "" _regex(const char* str, size_t _);
 
-String erase(Regex, String);
+String operator-(String, Regex);
 
 #endif // UTILS_STRING_H

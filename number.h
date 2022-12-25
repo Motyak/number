@@ -17,19 +17,22 @@ class Digit
 
     Digit operator~();
 
+    // called by '''bool operator==(Digit, Digit)'''
     bool equals(Digit);
 };
 
+// required by std::vector, when doing std::vector<Digit> comparison
 bool operator==(Digit, Digit);
 
 class Number
 {
   private:
     std::vector<Digit> digits;
+    
+    Number(String);
 
   public:
     Number(std::vector<Digit>);
-    Number(String);
     Number(std::string);
     Number(const char*);
 
@@ -46,7 +49,7 @@ class Quantifier
   public:
     Quantifier(int);
 
-    int to_int();
+    explicit operator int() const;
 };
 
 using integral = unsigned long long int;

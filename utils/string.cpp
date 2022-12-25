@@ -34,7 +34,7 @@ Regex operator "" _regex(const char* str, size_t _)
     return Regex(std::string(str));
 }
 
-String erase(Regex p_regex, String p_str)
+String operator-(String p_str, Regex p_regex)
 {
     auto str = std::string(p_str);
     auto regex = std::regex(std::string(p_regex));
