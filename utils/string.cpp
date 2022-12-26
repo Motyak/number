@@ -28,11 +28,11 @@ Matches String::operator=(RegexToCheck p_regex)
     std::regex regex(p_regex.str);
     std::sregex_iterator it(this->str.begin(), this->str.end(), regex);
     std::sregex_iterator end;
-    std::vector<std::smatch> matches(it, end);
 
     std::vector<std::string> res;
     auto get_str = [](std::smatch m){return m[0];};
-    std::transform(matches.begin(),matches.end(), std::back_inserter(res), get_str);
+    std::transform(it, end, std::back_inserter(res), get_str);
+    
     return res;
 }
 

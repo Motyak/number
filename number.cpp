@@ -86,10 +86,7 @@ std::vector<Number> Number::operator[](Quantifier qu)
     Regex regex = (chunk_size * '.');
     std::vector<std::string> matches = (String(*this) =~ regex);
 
-    std::vector<Number> numbers;
-    auto to_number = [](std::string str){return Number(str);};
-    std::transform(matches.begin(), matches.end(), std::back_inserter(numbers), to_number);
-    return numbers;
+    return std::vector<Number>(matches.begin(), matches.end());
 }
 
 bool operator==(Number a, Number b)
