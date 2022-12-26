@@ -112,3 +112,9 @@ TEST_CASE("sum of a vector<Number>")
     Number res = sum(numbers);
     REQUIRE (res == "234"nb);
 }
+
+TEST_CASE("varidiac function sum of a multiple Number")
+{
+    Number res = sum("123"nb, "111"nb, "0"nb);
+    REQUIRE (res == "234"nb);
+}

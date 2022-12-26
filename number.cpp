@@ -3,6 +3,7 @@
 #include <utils/require.h>
 
 #include <bits/stdc++.h> // INT_MAX
+#include <cstdarg> // variadic function (sum)
 
 Digit::operator char() const
 {
@@ -133,6 +134,11 @@ Quantifier operator "" _(integral i)
 std::string operator*(Quantifier qu, char ch)
 {
     return std::string(int(qu), ch);
+}
+
+Number sum()
+{
+    return "0"nb;
 }
 
 Number sum(std::vector<Number> numbers)
