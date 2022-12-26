@@ -49,12 +49,24 @@ Number::Number(String p_digits)
     this->digits = std::vector<Digit>(digits.begin(), digits.end());
 }
 
+Number::Number(int i) : Number(String(std::to_string(i)))
+{
+    ;    
+}
+
+
 Number::operator String() const
 {
     std::vector<char> chars;
     auto to_char = [](Digit d){return char(d);};
     std::transform(this->digits.begin(), this->digits.end(), std::back_inserter(chars), to_char);
     return std::string(chars.begin(), chars.end());
+}
+
+Number::operator int() const
+{
+    std::string str = String(*this);
+    return std::stoi(str);
 }
 
 Number::Number(std::string digits) : Number(String(digits))
@@ -89,6 +101,11 @@ std::vector<Number> Number::operator[](Quantifier qu)
     return std::vector<Number>(matches.begin(), matches.end());
 }
 
+Number Number::operator+(Number other)
+{
+    return int(*this) + int(other);
+}
+
 bool operator==(Number a, Number b)
 {
     return a.equals(b);
@@ -116,4 +133,10 @@ Quantifier operator "" _(integral i)
 std::string operator*(Quantifier qu, char ch)
 {
     return std::string(int(qu), ch);
+}
+
+Number sum(std::vector<Number> numbers)
+{
+    auto sum_up = [](Number total, Number nb){return total + nb;};
+    return std::accumulate(numbers.begin(), numbers.end(), "0"nb,  sum_up);
 }

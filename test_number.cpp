@@ -105,3 +105,10 @@ TEST_CASE("Number subscript operator with Quantifier")
 
     REQUIRE (a == b);
 }
+
+TEST_CASE("sum of a vector<Number>")
+{
+    std::vector<Number> numbers = {"123"nb, "111"nb, "0"nb};
+    Number res = sum(numbers);
+    REQUIRE (res == "234"nb);
+}

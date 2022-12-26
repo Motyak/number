@@ -48,7 +48,9 @@ class Number
     std::vector<Digit> digits;
     
     Number(String);
+    Number(int);
     explicit operator String() const;
+    explicit operator int() const;
 
   public:
     Number(std::vector<Digit>);
@@ -57,12 +59,16 @@ class Number
 
     // called by '''bool operator==(Number, Number)'''
     bool equals(Number);
+
     std::vector<Number> operator[](Quantifier);
+    Number operator+(Number);
 };
 
 // required by std::vector, when doing std::vector<Number> comparison
 bool operator==(Number, Number);
 
 Number operator "" nb(const char*, size_t);
+
+Number sum(std::vector<Number>);
 
 #endif // NUMBER_H
