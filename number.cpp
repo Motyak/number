@@ -55,7 +55,6 @@ Number::Number(int i) : Number(String(std::to_string(i)))
     ;    
 }
 
-
 Number::operator String() const
 {
     std::vector<char> chars;
@@ -68,6 +67,11 @@ Number::operator int() const
 {
     std::string str = String(*this);
     return std::stoi(str);
+}
+
+Number::operator llong() const
+{
+    return int(*this);
 }
 
 Number::Number(std::string digits) : Number(String(digits))
@@ -104,6 +108,8 @@ std::vector<Number> Number::operator[](Quantifier qu)
 
 Number Number::operator+(Number other)
 {
+    require ( llong(*this) + llong(other) <= INT_MAX);
+
     return int(*this) + int(other);
 }
 
@@ -143,6 +149,5 @@ Number sum()
 
 Number sum(std::vector<Number> numbers)
 {
-    auto sum_up = [](Number total, Number nb){return total + nb;};
-    return std::accumulate(numbers.begin(), numbers.end(), "0"nb,  sum_up);
+    return std::accumulate(numbers.begin(), numbers.end(), "0"nb);
 }

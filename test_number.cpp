@@ -2,6 +2,8 @@
 
 #include <catch_amalgamated.hpp>
 
+#include <bits/stdc++.h> // INT_MAX
+
 TEST_CASE("Create a digit -succeeds-")
 {
     { Digit digit = 9; }
@@ -104,6 +106,20 @@ TEST_CASE("Number subscript operator with Quantifier")
     std::vector<Number> b = {"12"nb, "34"nb, "56"nb};
 
     REQUIRE (a == b);
+}
+
+TEST_CASE("sum of Number -succeeds-")
+{
+    Number a = std::to_string(INT_MAX);
+    Number b = "0";
+    a + b;
+}
+
+TEST_CASE("sum of Number -fail- (exceeding max value)")
+{
+    Number a = std::to_string(INT_MAX);
+    Number b = "1";
+    REQUIRE_THROWS(a + b);
 }
 
 TEST_CASE("sum of a vector<Number>")

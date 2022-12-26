@@ -6,6 +6,8 @@
 #include <string> // std::string
 #include <vector> // std::vector
 
+using llong = long long; //convenient
+
 class Digit
 {
   private:
@@ -51,6 +53,7 @@ class Number
     Number(int);
     explicit operator String() const;
     explicit operator int() const;
+    explicit operator llong() const;
 
   public:
     Number(std::vector<Digit>);
