@@ -45,7 +45,7 @@ Number::Number(String p_digits)
 {
     require (p_digits =~ R"(^\s*\d+(?:\s*\d+)*\s*$)"_regex);
 
-    std::string digits = (p_digits - R"(\s+)"_regex);
+    std::string digits = p_digits - R"(\s+)"_regex;
     this->digits = std::vector<Digit>(digits.begin(), digits.end());
 }
 
@@ -95,12 +95,12 @@ bool Number::equals(Number other)
 
 std::vector<Number> Number::operator[](Quantifier qu)
 {
-    bool equally_dividable = ((this->digits.size() % int(qu)) == 0);
+    bool equally_dividable = this->digits.size() % int(qu) == 0;
     require (equally_dividable);
 
     Quantifier chunk_size = this->digits.size() / int(qu);
-    Regex regex = (chunk_size * '.');
-    std::vector<std::string> matches = (String(*this) =~ regex);
+    Regex regex = chunk_size * '.';
+    std::vector<std::string> matches = String(*this) =~ regex;
 
     return std::vector<Number>(matches.begin(), matches.end());
 }

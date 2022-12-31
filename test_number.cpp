@@ -96,7 +96,7 @@ TEST_CASE("Create a quantifier -fails- (number exceeding max value)")
 
 TEST_CASE("Quantifier multiply operator, Number equal operator")
 {
-    bool equality = ( Number(6_ * '9') == "999 999"nb );
+    bool equality = Number(6_ * '9') == "999 999"nb;
     REQUIRE (equality);
 }
 
