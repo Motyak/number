@@ -28,11 +28,11 @@ class String
 
   public:
     String();
-    String(const char* str);
+    String(const char*);
     String(std::string str);
 
     operator std::string() const;
-    Matches operator=(RegexToCheck regex);
+    Matches operator=(RegexToCheck);
 };
 
 class Regex
@@ -48,7 +48,7 @@ class Regex
     operator std::string() const;
 };
 
-Regex  operator "" _regex(const char* str, size_t _);
+Regex  operator "" _regex(const char*, size_t);
 
 String operator-(String, Regex);
 

@@ -2,7 +2,10 @@
 
 #include <regex> // std::regex_match, std::regex_replace
 
-Matches::Matches(std::vector<std::string> val) : val(val){}
+Matches::Matches(std::vector<std::string> val) : val(val)
+{
+    ;
+}
 
 Matches::operator bool() const
 {
@@ -14,9 +17,20 @@ Matches::operator std::vector<std::string>() const
     return this->val;
 }
 
-String::String() : str(){}
-String::String(const char* str) : str(str){}
-String::String(std::string str) : str(str){}
+String::String() : str()
+{
+    ;
+}
+
+String::String(const char* str) : str(str)
+{
+    ;
+}
+
+String::String(std::string str) : str(str)
+{
+    ;
+}
 
 String::operator std::string() const
 {
@@ -36,7 +50,10 @@ Matches String::operator=(RegexToCheck p_regex)
     return res;
 }
 
-Regex::Regex(std::string str) : str(str){}
+Regex::Regex(std::string str) : str(str)
+{
+    ;
+}
 
 RegexToCheck Regex::operator~()
 {
@@ -48,7 +65,7 @@ Regex::operator std::string() const
     return this->str;
 }
 
-Regex operator "" _regex(const char* str, size_t _)
+Regex operator "" _regex(const char* str, size_t)
 {
     return Regex(std::string(str));
 }

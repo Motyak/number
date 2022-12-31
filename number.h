@@ -14,7 +14,7 @@ class Digit
     int val;
 
   public:
-    Digit(int);
+    Digit(int val);
     Digit(char);
 
     Digit operator~();
@@ -34,7 +34,7 @@ class Quantifier
     int val;
 
   public:
-    Quantifier(int);
+    Quantifier(int val);
 
     explicit operator int() const;
 };
@@ -56,7 +56,7 @@ class Number
     explicit operator llong() const;
 
   public:
-    Number(std::vector<Digit>);
+    Number(std::vector<Digit> digits);
     Number(std::string);
     Number(const char*);
 

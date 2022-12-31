@@ -3,18 +3,17 @@
 #include <utils/require.h>
 
 #include <bits/stdc++.h> // INT_MAX
-#include <cstdarg> // variadic function (sum)
 
 Digit::operator char() const
 {
     return char(this->val + '0');
 }
 
-Digit::Digit(int i)
+Digit::Digit(int val)
 {
-    require (0 <= i and i <= 9);
+    require (0 <= val and val <= 9);
 
-    this->val = i;
+    this->val = val;
 }
 
 Digit::Digit(char c) : Digit(int(c - '0'))
@@ -84,7 +83,7 @@ Number::Number(const char* digits) : Number(String(digits))
     ;
 }
 
-Number operator "" nb(const char* str, size_t _)
+Number operator "" nb(const char* str, size_t)
 {
     return Number(str);
 }
@@ -134,7 +133,7 @@ Quantifier operator "" _(integral i)
 {
     require (0 <= i and i <= INT_MAX); // 2 147 483 647 <=> 2^31 - 1
 
-    return Quantifier{int(i)};
+    return Quantifier(int(i));
 }
 
 std::string operator*(Quantifier qu, char ch)
