@@ -6,7 +6,7 @@
 
 Digit::operator char() const
 {
-    return char(this->val + '0');
+    return this->val + '0';
 }
 
 Digit::Digit(int val)
@@ -49,9 +49,9 @@ Number::Number(String p_digits)
     this->digits = std::vector<Digit>(digits.begin(), digits.end());
 }
 
-Number::Number(int i) : Number(String(std::to_string(i)))
+Number::Number(int i) : Number(std::to_string(i))
 {
-    ;    
+    ;
 }
 
 Number::operator String() const
@@ -85,7 +85,7 @@ Number::Number(const char* digits) : Number(String(digits))
 
 Number operator "" nb(const char* str, size_t)
 {
-    return Number(str);
+    return str;
 }
 
 bool Number::equals(Number other)
@@ -133,7 +133,7 @@ Quantifier operator "" _(integral i)
 {
     require (0 <= i and i <= INT_MAX); // 2 147 483 647 <=> 2^31 - 1
 
-    return Quantifier(int(i));
+    return int(i);
 }
 
 std::string operator*(Quantifier qu, char ch)

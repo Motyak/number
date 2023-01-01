@@ -28,7 +28,7 @@ int main()
     (y + 51percent2) == z; // true
 
 
-    2 * x == z; // true
+    x == z / 2; // true
 
-    2 * abs(x - y) == abs(y - z); // true
+    abs(x - y) == abs(y - z) / 2; // true
 }

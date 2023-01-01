@@ -27,8 +27,6 @@ class String
     std::string str;
 
   public:
-    String();
-    String(const char*);
     String(std::string str);
 
     operator std::string() const;
