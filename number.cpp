@@ -141,9 +141,9 @@ std::string operator*(Quantifier qu, char ch)
     return std::string(int(qu), ch);
 }
 
-Number sum()
+Number sum(Number a, Number b)
 {
-    return "0"nb;
+    return a + b;
 }
 
 Number sum(std::vector<Number> numbers)

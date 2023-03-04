@@ -73,12 +73,12 @@ bool operator==(Number, Number);
 Number operator "" nb(const char*, size_t);
 
 // used by variadic function sum
-Number sum();
+Number sum(Number, Number);
 
 template <typename ...T>
-Number sum(Number nb, T... args)
+Number sum(Number a, Number b, T... others)
 {
-    return nb + sum(args...);
+    return a + sum(b, others...);
 }
 
 Number sum(std::vector<Number>);
